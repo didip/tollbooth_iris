@@ -3,15 +3,15 @@ package tollbooth_iris
 
 import (
 	"github.com/didip/tollbooth"
-	"github.com/didip/tollbooth/config"
+	"github.com/didip/tollbooth/limiter"
 	"gopkg.in/kataras/iris.v6"
 )
 
 // LimitHandler is a middleware that performs
 // rate-limiting given a "limiter" configuration.
-func LimitHandler(limiter *config.Limiter) iris.HandlerFunc {
+func LimitHandler(lmt *limiter.Limiter) iris.HandlerFunc {
 	return func(ctx *iris.Context) {
-		httpError := tollbooth.LimitByRequest(limiter, ctx.Request)
+		httpError := tollbooth.LimitByRequest(lmt, ctx.Request)
 		if httpError != nil {
 			ctx.SetStatusCode(httpError.StatusCode)
 			ctx.WriteString(httpError.Message)
