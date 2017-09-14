@@ -11,7 +11,7 @@ import (
 // rate-limiting given a "limiter" configuration.
 func LimitHandler(lmt *limiter.Limiter) iris.HandlerFunc {
 	return func(ctx *iris.Context) {
-		httpError := tollbooth.LimitByRequest(lmt, ctx.Request)
+		httpError := tollbooth.LimitByRequest(lmt, ctx.Response, ctx.Request)
 		if httpError != nil {
 			ctx.SetStatusCode(httpError.StatusCode)
 			ctx.WriteString(httpError.Message)
