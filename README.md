@@ -23,7 +23,7 @@ func main() {
     app.Adapt( httprouter.New() )
     
     // Create a limiter struct.
-    limiter := tollbooth.NewLimiter(1, time.Second, nil)
+    limiter := tollbooth.NewLimiter(1, nil)
 
     app.Get("/", tollbooth_iris.LimitHandler(limiter), func(ctx *iris.Context) {
         ctx.WriteString("Hello, world!")
